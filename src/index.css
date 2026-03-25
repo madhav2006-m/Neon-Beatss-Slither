@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-mono: "VT323", monospace;
+}
+
+body {
+  background-color: #000000;
+  color: #00ffff;
+  font-family: 'VT323', monospace;
+  overflow-x: hidden;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.neon-border-cyan {
+  border: 2px solid #00ffff;
+  background: rgba(0, 255, 255, 0.05);
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+  position: relative;
+}
+
+.neon-border-magenta {
+  border: 2px solid #ff00ff;
+  background: rgba(255, 0, 255, 0.05);
+  clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+  position: relative;
+}
+
+.neon-text-cyan {
+  color: #00ffff;
+  text-shadow: 2px 2px 0px #ff00ff;
+}
+
+.neon-text-magenta {
+  color: #ff00ff;
+  text-shadow: -2px 2px 0px #00ffff;
+}
+
+/* Harsh grid background */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(0, 255, 255, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.15) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Static Noise Overlay */
+.bg-noise {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+  opacity: 0.2;
+  pointer-events: none;
+  z-index: 50;
+  mix-blend-mode: overlay;
+}
+
+/* Aggressive Glitch Text Effect */
+.glitch-text {
+  position: relative;
+  display: inline-block;
+}
+.glitch-text::before, .glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+.glitch-text::before {
+  left: 4px;
+  text-shadow: -4px 0 #ff00ff;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  animation: glitch-anim-1 2s infinite linear alternate-reverse;
+}
+.glitch-text::after {
+  left: -4px;
+  text-shadow: -4px 0 #00ffff;
+  clip-path: polygon(0 80%, 100% 20%, 100% 100%, 0 100%);
+  animation: glitch-anim-2 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+  0% { clip-path: polygon(0 20%, 100% 20%, 100% 21%, 0 21%); transform: translate(0); }
+  20% { clip-path: polygon(0 33%, 100% 33%, 100% 33%, 0 33%); transform: translate(-3px, 1px); }
+  40% { clip-path: polygon(0 44%, 100% 44%, 100% 44%, 0 44%); transform: translate(3px, -1px); }
+  60% { clip-path: polygon(0 50%, 100% 50%, 100% 20%, 0 20%); transform: translate(-3px, 2px); }
+  80% { clip-path: polygon(0 70%, 100% 70%, 100% 70%, 0 70%); transform: translate(3px, -2px); }
+  100% { clip-path: polygon(0 80%, 100% 80%, 100% 80%, 0 80%); transform: translate(0); }
+}
+@keyframes glitch-anim-2 {
+  0% { clip-path: polygon(0 25%, 100% 25%, 100% 30%, 0 30%); transform: translate(0); }
+  20% { clip-path: polygon(0 3%, 100% 3%, 100% 3%, 0 3%); transform: translate(3px, -2px); }
+  40% { clip-path: polygon(0 5%, 100% 5%, 100% 20%, 0 20%); transform: translate(-3px, 2px); }
+  60% { clip-path: polygon(0 15%, 100% 15%, 100% 15%, 0 15%); transform: translate(3px, 1px); }
+  80% { clip-path: polygon(0 90%, 100% 90%, 100% 90%, 0 90%); transform: translate(-3px, -1px); }
+  100% { clip-path: polygon(0 10%, 100% 10%, 100% 10%, 0 10%); transform: translate(0); }
+}
+
+/* Screen Tearing with Hue Rotate */
+.screen-tear {
+  animation: tear 3s infinite;
+}
+@keyframes tear {
+  0%, 95% { transform: translateX(0); filter: hue-rotate(0deg); }
+  96% { transform: translateX(-15px) skewX(10deg); filter: hue-rotate(90deg); }
+  97% { transform: translateX(15px) skewX(-10deg); filter: hue-rotate(-90deg); }
+  98% { transform: translateX(-8px) skewX(5deg); filter: hue-rotate(45deg); }
+  99% { transform: translateX(8px) skewX(-5deg); filter: hue-rotate(-45deg); }
+  100% { transform: translateX(0); filter: hue-rotate(0deg); }
+}
+
+/* CRT Scanline */
+.scanline {
+  width: 100%;
+  height: 20px;
+  position: absolute;
+  z-index: 9999;
+  background: rgba(0, 255, 255, 0.2);
+  opacity: 0.5;
+  animation: scanline 4s linear infinite;
+  pointer-events: none;
+}
+@keyframes scanline {
+  0% { top: -20px; }
+  100% { top: 100%; }
+}
+
+/* CRT Flicker */
+.crt-flicker {
+  animation: crt-flicker 0.15s infinite;
+}
+@keyframes crt-flicker {
+  0% { opacity: 0.95; }
+  50% { opacity: 0.85; }
+  100% { opacity: 0.95; }
+}
